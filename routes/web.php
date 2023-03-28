@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BackEnd\Admin\AdminCourseController;
 use App\Http\Controllers\BackEnd\Admin\StudentController;
 use App\Http\Controllers\BackEnd\DashboardController;
 use App\Http\Controllers\FrontEnd\CourseController;
@@ -40,6 +41,16 @@ Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.
             Route::group(['as' => 'students.', 'prefix' => 'students'], function() {
                 Route::get('list', [StudentController::class, 'list'])->name('list');
                 Route::get('create', [StudentController::class, 'create'])->name('create');
+                Route::post('store', [StudentController::class, 'store'])->name('store');
+                Route::get('show/{id}', [StudentController::class, 'show'])->name('show');
+                Route::delete('delete/{id}', [StudentController::class, 'destroy'])->name('delete');
+            });
+            Route::group(['as' => 'course.', 'prefix' => 'course'], function() {
+                Route::get('list', [AdminCourseController::class, 'list'])->name('list');
+                Route::get('create', [AdminCourseController::class, 'create'])->name('create');
+                Route::post('store', [AdminCourseController::class, 'store'])->name('store');
+                Route::delete('delete/{id}', [AdminCourseController::class, 'destroy'])->name('delete');
+                Route::get('show/{id}', [AdminCourseController::class, 'show'])->name('show');
             });
         });
     });

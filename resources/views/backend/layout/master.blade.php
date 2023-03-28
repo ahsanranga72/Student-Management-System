@@ -31,6 +31,7 @@
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
   <link href="{{ asset('public/assets/backend/css/app.css') }}" rel="stylesheet">
+  <link href="{{ asset('public/assets/frontend') }}/css/toastr.css" rel="stylesheet" />
   @stack('css')
 </head>
 
@@ -126,7 +127,37 @@
   <script src="{{asset('public/assets/backend/dist/js/adminlte.js')}}"></script>
   <script src="{{asset('public/assets/backend/dist/js/pages/dashboard.js')}}"></script>
   @stack('js')
+  <script src="{{asset('public/assets/frontend')}}/js/toastr.js"></script>
+<script>
+  @if ($errors->any())
+    @foreach ($errors->all() as $error)
+    toastr.error('{{ $error }}');
+    @endforeach
+  @endif
 
+  @if(session()->has('success'))
+    toastr.success('{{ session('success') }}');
+  @endif
+</script>
+<script src="{{asset('public/assets/backend')}}/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+<script>
+    function alert_function(id) {
+        "use strict";
+        Swal.fire({
+        title: 'Are you sure?',
+        showDenyButton: true,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          jQuery('#' + id).submit();
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not save', '', 'info')
+        }
+      })
+    }
+</script>
 </body>
 
 </html>

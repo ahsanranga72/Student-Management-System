@@ -43,21 +43,40 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse($students as $k=>$student)
                                 <tr>
-                                    <td>183</td>
-                                    <td>John Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                                    <td>{{($students->currentPage()-1)*$students->perPage()+$k+1}}</td>
+                                    <td>{{$student->name}}</td>
+                                    <td>{{$student->course->name}}</td>
+                                    <td>
+                                        <div class="g-2">
+                                            <a type="button"
+                                                href="{{ route('backend.admin.students.show', $student['id']) }}"
+                                                class="btn btn-sm btn-primary">View</a>
+                                            <a class="btn btn-sm btn-danger" href="javascript:"
+                                                onclick="alert_function('delete-{{ $student['id'] }}')">Delete</a>
+                                            <form
+                                                action="{{ route('backend.admin.students.delete',  $student['id']) }}"
+                                                id="delete-{{ $student['id'] }}"
+                                                method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-centre">Please add first.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td>1</td>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                     <!-- /.card-body -->
+                </div>
+                <div class="card-tools" style="float: right;">
+                    {{ $students->links() }}
                 </div>
                 <!-- /.card -->
             </div>
