@@ -25,9 +25,9 @@ class HomeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function about_us()
     {
-        //
+        return view('frontend.about-us');
     }
 
     /**

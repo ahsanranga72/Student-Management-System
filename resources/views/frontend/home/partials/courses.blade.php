@@ -21,7 +21,7 @@
             <p>please add first.</p>
         @endforelse
     </ul>
-    <p class="text-center noPadd" style="margin-top: 100px;"><a href="#" class="btn btn-primary btn-lg" role="button">View all Courses</a></p>
+    <p class="text-center noPadd" style="margin-top: 100px;"><a href="{{ route('frontend.course.by-category') }}" class="btn btn-primary btn-lg" role="button">View all Courses</a></p>
 </div>
 </section>
 <!--/popular courses end--> 

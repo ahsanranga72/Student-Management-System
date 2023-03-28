@@ -22,8 +22,8 @@
                                 <ul class="nav navbar-nav" id="navigation">
                                     <li class="menuItem" id="home"><a href="#wrapper">Home</a></li>
                                     <li class="menuItem"><a href="#courses">courses</a></li>
-                                    <li><a href="#">About us</a></li>
-                                    <li><a href="#">Login</a></li>
+                                    <li><a href="{{ route('frontend.about-us') }}">About us</a></li>
+                                    <li><a href="{{ route('login') }}">Login</a></li>
                                 </ul>
                             </div>
                         </nav>
