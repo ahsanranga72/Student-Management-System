@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <img src="{{ asset('storage/app/public/student') }}/{{ $student->image }}"
+                                <img src="{{ asset('storage/app/public/student') }}/{{ $student->image }}" height="220" width="229"
                                     onerror="this.src='{{ asset('public/assets/backend/dist/img/place.png') }}'"
                                     alt="" style="display: block; margin: auto;">
                             </div>

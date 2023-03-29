@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -38,6 +39,10 @@ class LoginController extends Controller
         if (isset($user) && auth()->attempt(['email' => $request->email, 'password' => $request->password, 'is_active' => 1], $request->remember)) {
             if($user['type'] == 'admin'){
                 return redirect()->route('backend.admin.dashboard');
+            } else if($user['type'] == 'student'){
+                return redirect()->route('backend.admin.dashboard');
+            }else{
+                return redirect()->route('home');
             }
         }
 
@@ -56,40 +61,30 @@ class LoginController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function registration(Request $request)
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            'f_name' => 'required',
+            'l_name' => 'required',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required|same:password',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        if ($validator->fails()) {
+                return back()->withErrors($validator);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $user = $this->user;
+        $user->name = $request->f_name.' '.$request->l_name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = bcrypt($request->password);
+        $user->type = 'guest';
+        $user->is_active = 1;
+        $user->save();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return back()->withSuccess('Sign up successful.');
     }
 }

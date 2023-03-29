@@ -82,6 +82,8 @@
                                                 <li class="menuItem"><a
                                                         href="{{ route('home') }}">courses</a></li>
                                                 <li class="menuItem"><a
+                                                        href="{{ route('home') }}">faculties</a></li>
+                                                <li class="menuItem"><a
                                                         href="{{ route('frontend.about-us') }}">About us</a></li>
                                                 <li><a
                                                         href="{{ route('login') }}">Login</a>
@@ -118,6 +120,25 @@
             </div>
         </footer>
         <!--Footer end -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="margin-top: 40vh;">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <h4>Please login to continue.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="background: #8b3232; border-bottom: 3px solid #621616;">Close</button>
+                <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+            </div>
+            </div>
+        </div>
     </div>
 <!--jquary min js--> 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script> 

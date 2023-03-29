@@ -22,8 +22,22 @@
                                 <ul class="nav navbar-nav" id="navigation">
                                     <li class="menuItem" id="home"><a href="#wrapper">Home</a></li>
                                     <li class="menuItem"><a href="#courses">courses</a></li>
+                                    <li class="menuItem"><a href="#faculties">faculties</a></li>
                                     <li><a href="{{ route('frontend.about-us') }}">About us</a></li>
-                                    <li><a href="{{ route('login') }}">Login</a></li>
+                                    @if(auth()->check())
+                                        <li>
+                                            <a onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"
+                                                href="javascript:void(0)">Logout
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}"
+                                                method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                    @else
+                                        <li><a href="{{ route('login') }}">Login</a></li>
+                                    @endif
                                 </ul>
                             </div>
                         </nav>

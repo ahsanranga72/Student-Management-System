@@ -36,7 +36,8 @@
                     @forelse($courses as $course)
                         <li class="course1 col-xs-6 col-sm-4 col-md-3 col-lg-3" style="height: 320px; width: 292px;">
                             <div class="lightCon">
-                                <a href="{{ route('shine.course-show', $course->id) }}"
+                                @if(auth()->check())
+                                <a href="{{route('frontend.course.show', $course->id)}}"
                                     target="_blank">
                                     <span class="hoverBox">
                                         <div>
@@ -45,7 +46,19 @@
                                     </span>
                                 </a>
                                 <img src="{{ asset('storage/app/public/course/thumbnail') }}/{{ $course->thumbnail }}"
-                                    alt="" style="height: 100%; width: 100%;"> </div>
+                                    alt="" style="height: 100%; width: 100%;">
+                                @else
+                                <a href="#" data-toggle="modal" data-target="#myModal">
+                                    <span class="hoverBox">
+                                        <div>
+                                            <h4>{{ $course->name }}</h4>
+                                        </div>
+                                    </span>
+                                </a>
+                                <img src="{{ asset('storage/app/public/course/thumbnail') }}/{{ $course->thumbnail }}"
+                                    alt="" style="height: 100%; width: 100%;">
+                                @endif
+                            </div>
                         </li>
                     @empty
                         <p>please add first.</p>

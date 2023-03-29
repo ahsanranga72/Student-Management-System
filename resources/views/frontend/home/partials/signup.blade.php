@@ -2,7 +2,7 @@
 <div class="container form-header">
     <div class="form-container">
         <h2>Sign Up<span>Create Account</span></h2>
-        <form action="#" method="post">
+        <form action="{{ route('registration') }}" method="post">
             @csrf
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-row">
@@ -11,6 +11,9 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-row">
                     <input type="email" name="email" placeholder="Email Address" class="normal">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-row">
+                    <input type="text" name="phone" placeholder="Phone number" class="normal">
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-row">
                     <input type="password" name="password" placeholder="Password" class="normal">
@@ -24,7 +27,7 @@
             </div>
             <br>
             <h5><span style="color: #2f5071;">Already an User ?
-                    <a style="color: #2f5071;" class="aa" href="#">Login</a>
+                    <a style="color: #2f5071;" class="aa" href="{{ route('login') }}">Login</a>
                 </span>
             </h5>
         </form>

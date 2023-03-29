@@ -44,7 +44,8 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $course =$this->course->find($id);
+        return response()->file(storage_path('app/public/course/file/'.$course['file']));
     }
 
     /**

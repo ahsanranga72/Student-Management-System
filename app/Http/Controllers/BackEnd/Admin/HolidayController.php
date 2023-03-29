@@ -1,38 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\BackEnd;
+namespace App\Http\Controllers\BackEnd\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Course;
 use App\Models\Holiday;
-use App\Models\StudentDetails;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-class DashboardController extends Controller
+class HolidayController extends Controller
 {
     private $holiday;
-    private $student;
-    private $course;
-    private $user;
 
-    public function __construct(Holiday $holiday, StudentDetails $student, Course $course, User $user)
+    public function __construct(Holiday $holiday)
     {
         $this->holiday = $holiday;
-        $this->student = $student;
-        $this->course = $course;
-        $this->user = $user;
     }
     /**
      * Display a listing of the resource.
      */
-    public function admin_dashboard()
+    public function list()
     {
-        $holidays = $this->holiday->whereYear('date',date('Y'))->get();
-        $student_count = $this->student->get()->count();
-        $course_count = $this->course->get()->count();
-        $guest_count = $this->user->where('type', 'guest')->get()->count();
-        return view('backend.admin.dashboard', compact('holidays','student_count', 'course_count', 'guest_count'));
+        $holidays = $this->holiday->paginate(10);
+        return view('backend.admin.holiday.list', compact('holidays'));
     }
 
     /**
@@ -40,7 +29,7 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.admin.holiday.create');
     }
 
     /**
@@ -48,7 +37,17 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), [
+            'title' => 'required',
+            'date' => 'required',
+        ])->validate();
+
+        $holiday = $this->holiday;
+        $holiday['title'] = $request['title'];
+        $holiday['date'] = $request['date'];
+        $holiday->save();
+
+        return redirect()->route('backend.admin.holiday.create')->with('success', 'Holiday successfully created.');
     }
 
     /**
@@ -80,6 +79,7 @@ class DashboardController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->holiday->find($id)->delete();
+        return back()->with('success', 'Successfully removed.');
     }
 }

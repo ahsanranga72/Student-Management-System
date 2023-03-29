@@ -30,6 +30,9 @@
             width: 90%;
         }
     }
+    a.aa:hover {
+        color: white;
+    }
 </style>
 @endpush
 
@@ -51,6 +54,12 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <input type="submit" class="button" value="Submit">
                         </div>
+                        <br>
+                        <h5>
+                            <span style="color: #2f5071; padding-left: 15px;">Don't have an account?
+                                <a style="color: #2f5071;" class="aa" href="{{ route('home') }}">Signup</a>
+                            </span>
+                        </h5>
                     </div>
                 </form>
             </div>

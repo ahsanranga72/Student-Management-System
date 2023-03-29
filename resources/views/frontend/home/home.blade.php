@@ -50,7 +50,7 @@
   <!--Header end --> 
   @include('frontend.home.partials.courses')
   <!--fun facts start -->
-
+  @include('frontend.home.partials.faculties')
   <!--Bottom Four Column start-->
   @include('frontend.layouts.partials.footer')
   <!--/Bottom Four Column end --> 
@@ -68,6 +68,25 @@
   <!--Footer end --> 
 </div>
 <!--wrapper end--> 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top: 40vh;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+		<h4>Please login to continue.</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" style="background: #8b3232; border-bottom: 3px solid #621616;">Close</button>
+        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!--modernizr js--> 
 <script type="text/javascript" src="{{ asset('public/assets/frontend') }}/js/modernizr.custom.26633.js"></script> 
@@ -155,8 +174,13 @@ $(document).ready( function() {
 		parts: {
 		  0: 'banner',
 		  1: 'courses',
-		  2: 'contact',
-		  3: 'login'
+		  2: 'faculties',
+		  3: 'contact',
+		  @if(auth()->check())
+		  4: 'logout',
+		  @else
+		  4: 'login'
+		  @endif
 		},
 		itemClass: 'menuItem',
 		itemHover: 'active',
