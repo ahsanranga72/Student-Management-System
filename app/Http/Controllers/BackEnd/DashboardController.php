@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackEnd;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attendance;
 use App\Models\Course;
 use App\Models\Holiday;
 use App\Models\StudentDetails;
@@ -15,13 +16,15 @@ class DashboardController extends Controller
     private $student;
     private $course;
     private $user;
+    private $attendance;
 
-    public function __construct(Holiday $holiday, StudentDetails $student, Course $course, User $user)
+    public function __construct(Holiday $holiday, StudentDetails $student, Course $course, User $user, Attendance $attendance)
     {
         $this->holiday = $holiday;
         $this->student = $student;
         $this->course = $course;
         $this->user = $user;
+        $this->attendance = $attendance;
     }
     /**
      * Display a listing of the resource.
@@ -38,9 +41,18 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function student_dashboard()
     {
-        //
+        $date = date("Y-m-d");
+        $holidays = $this->holiday->whereYear('date',date('Y'))->get();
+        $student = $this->student->where('user_id', auth()->user()->id)->first();
+        $attendance = $this->attendance->orderBy('id', 'desc')->where('student_id', '=', $student->id??0)->where('date', '=', $date)->first();
+        $total_present = $this->attendance
+            ->orderBy('id', 'desc')
+            ->where('student_id', '=', !empty($student) ? $student->id : 0)
+            ->whereMonth('date', '=', date('m'))
+            ->get()->count();
+        return view('backend.student.dashboard', compact('holidays', 'attendance', 'total_present'));
     }
 
     /**

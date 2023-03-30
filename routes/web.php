@@ -8,6 +8,8 @@ use App\Http\Controllers\BackEnd\Admin\HolidayController;
 use App\Http\Controllers\BackEnd\Admin\QuestionController;
 use App\Http\Controllers\BackEnd\Admin\StudentController;
 use App\Http\Controllers\BackEnd\DashboardController;
+use App\Http\Controllers\BackEnd\Student\AttendanceController;
+use App\Http\Controllers\BackEnd\Student\StudentClassScheduleController;
 use App\Http\Controllers\FrontEnd\CourseController;
 use App\Http\Controllers\FrontEnd\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +82,17 @@ Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.
                 Route::get('list', [GuestController::class, 'list'])->name('list');
                 Route::delete('delete/{id}', [GuestController::class, 'destroy'])->name('delete');
             });
+        });
+    });
+    Route::group(['middleware' => 'student' ,'prefix' => 'student', 'as' => 'student.'], function () {
+        Route::get('dashboard', [DashboardController::class, 'student_dashboard'])->name('dashboard');
+        Route::group(['as' => 'attendance.', 'prefix' => 'attendance'], function() {
+            Route::post('clock-in', [AttendanceController::class, 'clock_in'])->name('clock-in');
+            Route::post('clock-out', [AttendanceController::class, 'clock_out'])->name('clock-out');
+            Route::get('list', [AttendanceController::class, 'list'])->name('list');
+        });
+        Route::group(['as' => 'class_schedule.', 'prefix' => 'class_schedule'], function() {
+            Route::get('list', [StudentClassScheduleController::class, 'list'])->name('list');
         });
     });
 });

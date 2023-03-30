@@ -40,7 +40,7 @@ class LoginController extends Controller
             if($user['type'] == 'admin'){
                 return redirect()->route('backend.admin.dashboard');
             } else if($user['type'] == 'student'){
-                return redirect()->route('backend.admin.dashboard');
+                return redirect()->route('backend.student.dashboard');
             }else{
                 return redirect()->route('home');
             }

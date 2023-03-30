@@ -80,7 +80,7 @@ class StudentController extends Controller
 
         $student_details = $this->student_details;
         $student_details['user_id'] = $user['id'];
-        $student_details['student_id'] = ($this->course->find($request['course'])->code??'0').'/B'.sprintf("%04d", $request['student_batch']).'/'.sprintf("%03d",(($this->student_details->latest()->first()->id??0)+1));
+        $student_details['student_id'] = ($this->course->find($request['course'])->code??'0').'/B'.sprintf("%04d", $request['student_batch']).'/'.sprintf("%03d",(($this->student_details->where('course_id', $request['course'])->latest()->count()??0)+1));
         $student_details['name'] = $request['student_name'];
         $student_details['image'] = $request->has('student_image') ? $this->image_uploader('student/', 'png', $request->student_image) : null;
         $student_details['course_id'] = $request['course'];

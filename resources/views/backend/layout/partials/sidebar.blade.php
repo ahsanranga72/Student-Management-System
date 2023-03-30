@@ -149,6 +149,32 @@
                     </a>
                 </li>
             @endif
+            @if(Auth::user()->type=='student')
+                <li class="nav-item">
+                    <a href="{{ route('backend.student.dashboard') }}" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('backend.student.attendance.list') }}" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            Monthly attendance
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('backend.student.class_schedule.list') }}" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            Class schedule
+                        </p>
+                    </a>
+                </li>
+            @endif
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

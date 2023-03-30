@@ -37,6 +37,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Student ID</th>
                                     <th>Name</th>
                                     <th>Course</th>
                                     <th>Action</th>
@@ -46,6 +47,7 @@
                                 @forelse($students as $k=>$student)
                                 <tr>
                                     <td>{{($students->currentPage()-1)*$students->perPage()+$k+1}}</td>
+                                    <td>{{$student->student_id}}</td>
                                     <td>{{$student->name}}</td>
                                     <td>{{$student->course->name}}</td>
                                     <td>
