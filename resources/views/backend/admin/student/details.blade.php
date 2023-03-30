@@ -39,9 +39,9 @@
                                 <b>Physical challenges:</b> {{$student->physical_challenges}}<br>
                             </div>
                             <div class="col-4">
-                                <b>Father Name:</b> {{$student->father_name}}<br>
-                                <b>Mother Name:</b> {{$student->mother_name}}<br>
-                                <b>Father occupation:</b> {{$student->father_occupation}}<br>
+                                <b>Father's Name:</b> {{$student->father_name}}<br>
+                                <b>Mother's Name:</b> {{$student->mother_name}}<br>
+                                <b>Father's occupation:</b> {{$student->father_occupation}}<br>
                                 <b>Local guardian name:</b> {{$student->lg_name}}<br>
                                 <b>Local guardian mobile:</b> {{$student->lg_mobile}}<br>
                                 <b>Local guardian email:</b> {{$student->lg_email}}<br>

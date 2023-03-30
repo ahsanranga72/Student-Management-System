@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackEnd\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attendance;
 use App\Models\Course;
 use App\Models\StudentDetails;
 use App\Models\StudentEducationDetails;
@@ -18,13 +19,15 @@ class StudentController extends Controller
     private $user;
     private $student_details;
     private $student_education_details;
+    private $attendance;
 
-    public function __construct(Course $course, User $user, StudentDetails $student_details, StudentEducationDetails $student_education_details)
+    public function __construct(Course $course, User $user, StudentDetails $student_details, StudentEducationDetails $student_education_details, Attendance $attendance)
     {
         $this->course = $course;
         $this->user = $user;
         $this->student_details = $student_details;
         $this->student_education_details = $student_education_details;
+        $this->attendance = $attendance;
     }
     /**
      * Display a listing of the resource.
@@ -77,7 +80,7 @@ class StudentController extends Controller
 
         $student_details = $this->student_details;
         $student_details['user_id'] = $user['id'];
-        $student_details['student_id'] = ($this->course->find($request['course'])->code??'0').'/'.sprintf("%04d", $request['student_batch']).'/'.($this->student_details->latest()->first()->id??0)+1;
+        $student_details['student_id'] = ($this->course->find($request['course'])->code??'0').'/B'.sprintf("%04d", $request['student_batch']).'/'.sprintf("%03d",(($this->student_details->latest()->first()->id??0)+1));
         $student_details['name'] = $request['student_name'];
         $student_details['image'] = $request->has('student_image') ? $this->image_uploader('student/', 'png', $request->student_image) : null;
         $student_details['course_id'] = $request['course'];
@@ -168,9 +171,44 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function attendance(Request $request)
     {
-        //
+        $attendances = $this->attendance;
+        if ($request->type == 'monthly' && !empty($request->month)) 
+        {
+            $month = date('m', strtotime($request->month));
+            $year = date('Y', strtotime($request->month));
+
+            $start_date = date($year . '-' . $month . '-01');
+            $end_date = date($year . '-' . $month . '-t');
+
+            $attendances->whereBetween(
+                'date', [
+                    $start_date,
+                    $end_date,
+                ]
+            );
+        } 
+        elseif ($request->type == 'daily' && !empty($request->date)) 
+        {
+            $attendances->where('date', $request->date);
+        } 
+        else 
+        {
+            $month = date('m');
+            $year = date('Y');
+            $start_date = date($year . '-' . $month . '-01');
+            $end_date = date($year . '-' . $month . '-t');
+            $attendances->whereBetween(
+                'date', [
+                    $start_date,
+                    $end_date,
+                ]
+            );
+        }
+        $attendances = $attendances->paginate(10);
+
+        return view('backend.admin.student.attendance', compact('attendances'));
     }
 
     /**

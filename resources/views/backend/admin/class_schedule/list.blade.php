@@ -1,7 +1,7 @@
 @extends('backend.layout.master')
 
 
-@section('page_title', 'Questions')
+@section('page_title', 'Class Schedule')
 @section('dashboard_link', route('backend.admin.dashboard'))
 
 @push('css')
@@ -18,6 +18,9 @@
                         <h3 class="card-title">List</h3>
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
+                                <a href="{{ route('backend.admin.class-schedule.create') }}"
+                                    class="btn btn-primary" style="margin: 0 10px; padding: 2px 20px;"><i
+                                        class="fas fa-plus"></i>Add</a>
                                 <input type="text" name="table_search" class="form-control float-right"
                                     placeholder="Search">
 
@@ -35,20 +38,34 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Number</th>
-                                    <th>Comment</th>
+                                    <th>Course Name</th>
+                                    <th>Day</th>
+                                    <th>Start time</th>
+                                    <th>End time</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($questions as $k=>$question)
+                                @forelse($class_schedules as $k=>$class_schedule)
                                     <tr>
                                         <td>{{ $k+1 }}</td>
-                                        <td>{{ $question['name'] }}</td>
-                                        <td>{{ $question['email'] }}</td>
-                                        <td>{{ $question['number'] }}</td>
-                                        <td>{{ $question['comments'] }}</td>
+                                        <td>{{ $class_schedule['course']['name'] }}</td>
+                                        <td>{{ $class_schedule['day'] }}</td>
+                                        <td>{{ $class_schedule['start_time'] }}</td>
+                                        <td>{{ $class_schedule['end_time'] }}</td>
+                                        <td>
+                                            <div class="g-2">
+                                                <a class="btn btn-sm btn-danger" href="javascript:"
+                                                    onclick="alert_function('delete-{{ $class_schedule['id'] }}')">Delete</a>
+                                                <form
+                                                    action="{{ route('backend.admin.class-schedule.delete',  $class_schedule['id']) }}"
+                                                    id="delete-{{ $class_schedule['id'] }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -63,7 +80,7 @@
                     <!-- /.card-body -->
                 </div>
                 <div class="card-tools" style="float: right;">
-                    {{ $questions->links() }}
+                    {{ $class_schedules->links() }}
                 </div>
                 <!-- /.card -->
             </div>

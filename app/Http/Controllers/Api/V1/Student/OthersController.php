@@ -9,6 +9,7 @@ use App\Models\Question;
 use App\Models\StudentClassSchedule;
 use App\Traits\FileManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class OthersController extends Controller
@@ -35,7 +36,7 @@ class OthersController extends Controller
 
     public function get_class_shecule()
     {
-        $student_class_schedule = $this->class_schedule->get();
+        $student_class_schedule = DB::table('class_schedules');
 
         return response()->json(['student_class_schedule' => $student_class_schedule]);
     }
@@ -61,5 +62,10 @@ class OthersController extends Controller
         $question->save();
 
         return response()->json(['message' => 'Thanks for your comments. You shall be connected soon.'], 200);
+    }
+
+    public function about_us()
+    {
+        return view('api.api-about-us');
     }
 }

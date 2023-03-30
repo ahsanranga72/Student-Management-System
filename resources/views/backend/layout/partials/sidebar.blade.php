@@ -46,6 +46,12 @@
                                 <p>Admission</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('backend.admin.students.attendance') }}" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Attendance</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -67,7 +73,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i>
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
                             Course Management
                             <i class="fas fa-angle-left right"></i>
@@ -82,6 +88,29 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('backend.admin.course.create') }}" class="nav-link">
+                                <i class="fas fa-plus nav-icon"></i>
+                                <p>Add</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-list-ul"></i>
+                        <p>
+                            Class Schedule
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('backend.admin.class-schedule.list') }}" class="nav-link">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('backend.admin.class-schedule.create') }}" class="nav-link">
                                 <i class="fas fa-plus nav-icon"></i>
                                 <p>Add</p>
                             </a>

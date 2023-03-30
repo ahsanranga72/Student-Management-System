@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BackEnd\Admin\AdminCourseController;
+use App\Http\Controllers\BackEnd\Admin\ClassScheduleController;
 use App\Http\Controllers\BackEnd\Admin\GuestController;
 use App\Http\Controllers\BackEnd\Admin\HolidayController;
 use App\Http\Controllers\BackEnd\Admin\QuestionController;
@@ -50,6 +51,7 @@ Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.
                 Route::post('store', [StudentController::class, 'store'])->name('store');
                 Route::get('show/{id}', [StudentController::class, 'show'])->name('show');
                 Route::delete('delete/{id}', [StudentController::class, 'destroy'])->name('delete');
+                Route::get('attendance', [StudentController::class, 'attendance'])->name('attendance');
             });
             Route::group(['as' => 'course.', 'prefix' => 'course'], function() {
                 Route::get('list', [AdminCourseController::class, 'list'])->name('list');
@@ -57,6 +59,13 @@ Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.
                 Route::post('store', [AdminCourseController::class, 'store'])->name('store');
                 Route::delete('delete/{id}', [AdminCourseController::class, 'destroy'])->name('delete');
                 Route::get('show/{id}', [AdminCourseController::class, 'show'])->name('show');
+            });
+            Route::group(['as' => 'class-schedule.', 'prefix' => 'class-schedule'], function() {
+                Route::get('list', [ClassScheduleController::class, 'list'])->name('list');
+                Route::get('create', [ClassScheduleController::class, 'create'])->name('create');
+                Route::post('store', [ClassScheduleController::class, 'store'])->name('store');
+                Route::delete('delete/{id}', [ClassScheduleController::class, 'destroy'])->name('delete');
+                Route::get('show/{id}', [ClassScheduleController::class, 'show'])->name('show');
             });
             Route::group(['as' => 'holiday.', 'prefix' => 'holiday'], function() {
                 Route::get('list', [HolidayController::class, 'list'])->name('list');

@@ -1,7 +1,7 @@
 @extends('backend.layout.master')
 
 
-@section('page_title', 'Questions')
+@section('page_title', 'Student attendance')
 @section('dashboard_link', route('backend.admin.dashboard'))
 
 @push('css')
@@ -36,26 +36,26 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Number</th>
-                                    <th>Comment</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Clock in</th>
+                                    <th>Clock out</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($questions as $k=>$question)
-                                    <tr>
-                                        <td>{{ $k+1 }}</td>
-                                        <td>{{ $question['name'] }}</td>
-                                        <td>{{ $question['email'] }}</td>
-                                        <td>{{ $question['number'] }}</td>
-                                        <td>{{ $question['comments'] }}</td>
-                                    </tr>
+                                @forelse($attendances as $k=>$attendance)
+                                <tr>
+                                    <td>{{($attendances->currentPage()-1)*$attendances->perPage()+$k+1}}</td>
+                                    <td>{{$attendance->$student->name}}</td>
+                                    <td>{{$attendance->date}}</td>
+                                    <td>{{$attendance->status}}</td>
+                                    <td>{{$attendance->clock_in}}</td>
+                                    <td>{{$attendance->clock_out}}</td>
+                                </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="4" class="text-centre">
-                                            No data found!
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="6" class="text-centre">No data found!</td>
+                                </tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -63,7 +63,7 @@
                     <!-- /.card-body -->
                 </div>
                 <div class="card-tools" style="float: right;">
-                    {{ $questions->links() }}
+                    {{ $attendances->links() }}
                 </div>
                 <!-- /.card -->
             </div>

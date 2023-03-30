@@ -1,4 +1,4 @@
-@extends('frontend.layouts.master')
+@extends('api.api-master')
 
 @push('css')
     <style>
@@ -177,50 +177,4 @@
     </div>
 </section>
 <!-- Teachers details end-->
-
-<section class="grey_section section_gap" id="contact">
-    <div class="container">
-        <div class="heading" style="text-align: left; padding-bottom: 0; margin-bottom: 0;">
-            <h1><span>Got</span>Questions ?</h1>
-            <p>Please connect with us at SHINEE without any delay. We're happy to help !</p>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                <!--google map start-->
-                <div class="row mapArea">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.031129305163!2d90.3258952!3d23.781905800000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c70e6603ec89%3A0xd8b39cc33fdba886!2sSHINE%20School%20of%20Hospitality%20INtegrated%20Education!5e0!3m2!1sen!2sin!4v1674806242668!5m2!1sen!2sin"
-                        frameborder="0" style="border:0" allowfullscreen></iframe>
-                </div>
-                <!--google map end-->
-            </div>
-            <!-- contact from start-->
-            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                <div id="message"></div>
-                <form method="post" action="{{ route('frontend.submit-question') }}">
-                    @csrf
-                    <div class="form-row clearfix">
-                        <input name="name" id="name" type="text" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 normal"
-                            placeholder="Your Name">
-                    </div>
-                    <div class="form-row clearfix">
-                        <input name="number" id="number" type="text"
-                            class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 normal" placeholder="Contact Number">
-                    </div>
-                    <div class="form-row clearfix">
-                        <input name="email" id="email" type="email"
-                            class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 normal" placeholder="Email Address">
-                    </div>
-                    <div class="form-row clearfix">
-                        <textarea name="comments" id="comments"
-                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 normal medium"
-                            placeholder="Your Comments"></textarea>
-                    </div>
-                    <input type="submit" id="submit" name="send" class="button" value="Send message">
-                </form>
-            </div>
-            <!-- contact from end-->
-        </div>
-    </div>
-</section>
 @endsection

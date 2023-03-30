@@ -25,7 +25,7 @@
                     <div class="icon">
                         <i class="ion ion-document"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer"></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -40,7 +40,7 @@
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer"></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -55,7 +55,7 @@
                     <div class="icon">
                         <i class="ion ion-person"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer"></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -70,7 +70,7 @@
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer"></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -91,7 +91,7 @@
             <div class="col-md-5">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Todays Attendance</h3>
+                <h3 class="card-title">Today's Attendance</h3>
 
                 <div class="card-tools">
                   
