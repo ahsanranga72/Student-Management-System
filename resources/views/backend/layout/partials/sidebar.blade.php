@@ -58,7 +58,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('backend.admin.students.list') }}" class="nav-link">
+                            <a href="{{ route('backend.admin.guest.list') }}" class="nav-link">
                                 <i class="fas fa-list nav-icon"></i>
                                 <p>List</p>
                             </a>
@@ -110,6 +110,14 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('backend.admin.question.list') }}" class="nav-link">
+                        <i class="nav-icon fas fa-question"></i>
+                        <p>
+                            Questions
+                        </p>
+                    </a>
                 </li>
             @endif
         </ul>

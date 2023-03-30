@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                        <label for="mother_name">Mothers's name  <span style="color: red;">*</span></label>
+                                        <label for="mother_name">Mother's name  <span style="color: red;">*</span></label>
                                         <input type="text" name="mother_name" id="mother_name" class="form-control">
                                     </div>
                                 </div>

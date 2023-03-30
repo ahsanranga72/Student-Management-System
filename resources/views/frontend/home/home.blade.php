@@ -59,7 +59,7 @@
     <div class="container">
       <div class="row">
         <div class="pull-left">
-          <p>&copy; 2023  SHINEE. All Rights Reserved.</p>
+          <p>&copy; 2023  Adency Ltd. All Rights Reserved.</p>
         </div>
         <div class="pull-right"><a class="gototop smooth" href="#wrapper">Go To Top<i class="fa fa-chevron-up"></i></a></div>
       </div>

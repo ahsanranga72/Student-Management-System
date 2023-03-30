@@ -4,15 +4,19 @@ namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
     private $course;
+    private $question;
 
-    public function __construct(Course $course)
+    public function __construct(Course $course, Question $question)
     {
         $this->course = $course;
+        $this->question = $question;
     }
     /**
      * Display a listing of the resource.
@@ -33,9 +37,23 @@ class HomeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function submit_question(Request $request)
     {
-        //
+        Validator::make($request->all(), [
+            'name' => 'required',
+            'number' => 'required',
+            'email' => 'required',
+            'comments' => 'required',
+        ])->validate();
+
+        $question = $this->question;
+        $question['name'] = $request['name'];
+        $question['number'] = $request['number'];
+        $question['email'] = $request['email'];
+        $question['comments'] = $request['comments'];
+        $question->save();
+
+        return back()->with('success', 'Thanks for your comments. You shall be connected soon.');
     }
 
     /**

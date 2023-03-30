@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BackEnd\Admin\AdminCourseController;
+use App\Http\Controllers\BackEnd\Admin\GuestController;
 use App\Http\Controllers\BackEnd\Admin\HolidayController;
+use App\Http\Controllers\BackEnd\Admin\QuestionController;
 use App\Http\Controllers\BackEnd\Admin\StudentController;
 use App\Http\Controllers\BackEnd\DashboardController;
 use App\Http\Controllers\FrontEnd\CourseController;
@@ -35,6 +37,7 @@ Route::group(['namespace' => 'FrontEnd', 'prefix' => 'frontend', 'as' => 'fronte
         Route::get('show/{id}', [CourseController::class, 'show'])->name('show');
     });
     Route::get('about-us', [HomeController::class, 'about_us'])->name('about-us');
+    Route::post('submit-question', [HomeController::class, 'submit_question'])->name('submit-question');
 });
 
 Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.'], function () {
@@ -60,6 +63,13 @@ Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.
                 Route::get('create', [HolidayController::class, 'create'])->name('create');
                 Route::post('store', [HolidayController::class, 'store'])->name('store');
                 Route::delete('delete/{id}', [HolidayController::class, 'destroy'])->name('delete');
+            });
+            Route::group(['as' => 'question.', 'prefix' => 'question'], function() {
+                Route::get('list', [QuestionController::class, 'list'])->name('list');
+            });
+            Route::group(['as' => 'guest.', 'prefix' => 'guest'], function() {
+                Route::get('list', [GuestController::class, 'list'])->name('list');
+                Route::delete('delete/{id}', [GuestController::class, 'destroy'])->name('delete');
             });
         });
     });

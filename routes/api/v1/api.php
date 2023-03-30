@@ -51,5 +51,9 @@ Route::group(['namespace' => 'Api/V1/Student', 'prefix'=>'student'], function() 
         Route::get('get', [OthersController::class, 'get_holidays']);
     });
 
+    Route::group(['prefix' => 'question'], function() {
+        Route::post('submit', [OthersController::class, 'question_submit']);
+    });
+
 
 });

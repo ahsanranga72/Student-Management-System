@@ -197,7 +197,8 @@
             <!-- contact from start-->
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div id="message"></div>
-                <form method="post" action="php/contact.php" name="cform" id="cform">
+                <form method="post" action="{{ route('frontend.submit-question') }}">
+                    @csrf
                     <div class="form-row clearfix">
                         <input name="name" id="name" type="text" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 normal"
                             placeholder="Your Name">
@@ -216,7 +217,6 @@
                             placeholder="Your Comments"></textarea>
                     </div>
                     <input type="submit" id="submit" name="send" class="button" value="Send message">
-                    <div id="simple-msg"></div>
                 </form>
             </div>
             <!-- contact from end-->
