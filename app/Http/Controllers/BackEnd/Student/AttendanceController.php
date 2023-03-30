@@ -22,40 +22,48 @@ class AttendanceController extends Controller
      */
     public function clock_in(Request $request)
     {
-        $date = date("Y-m-d");
-        $time = date("H:i:s");
-        $student = $this->student->where('user_id', $request->user()->id)->first();
-        if(empty($student))
+        $ip = $_SERVER['REMOTE_ADDR'];
+        if($ip == '::1')
         {
-            return back()->withErrors('Student not found!');
-        }
-
-        $todayAttendance = $this->attendance->where('student_id', '=', $student->id)->where('date', date('Y-m-d'))->first();
-        if (empty($todayAttendance)) {
-
-            $attendance = $this->attendance->orderBy('id', 'desc')->where('student_id', '=', $student->id)->where('clock_out', '=', '00:00:00')->first();
-            if ($attendance != null) {
-                $attendance = $this->attendance->find($attendance->id);
-                $attendance->clock_out = "12:00:00";
-                $attendance->save();
+            $date = date("Y-m-d");
+            $time = date("H:i:s");
+            $student = $this->student->where('user_id', $request->user()->id)->first();
+            if(empty($student))
+            {
+                return back()->withErrors('Student not found!');
             }
-
-            $attendance = $this->attendance;
-            $attendance->student_id = $student->id;
-            $attendance->date = $date;
-            $attendance->status = 'Present';
-            $attendance->clock_in = $time;
-            $attendance->clock_out = '00:00:00';
-            $attendance->save();
-
-            return back()->with('success','Successfully clock in.');
+    
+            $todayAttendance = $this->attendance->where('student_id', '=', $student->id)->where('date', date('Y-m-d'))->first();
+            if (empty($todayAttendance)) {
+    
+                $attendance = $this->attendance->orderBy('id', 'desc')->where('student_id', '=', $student->id)->where('clock_out', '=', '00:00:00')->first();
+                if ($attendance != null) {
+                    $attendance = $this->attendance->find($attendance->id);
+                    $attendance->clock_out = "12:00:00";
+                    $attendance->save();
+                }
+    
+                $attendance = $this->attendance;
+                $attendance->student_id = $student->id;
+                $attendance->date = $date;
+                $attendance->status = 'Present';
+                $attendance->clock_in = $time;
+                $attendance->clock_out = '00:00:00';
+                $attendance->save();
+    
+                return back()->with('success','Successfully clock in.');
+            }
+            else 
+            {
+                return back()->withErrors('Student are not allow multiple time clock in & clock out for every day.');
+            }
+    
+            return back()->withErrors('Something wrong!');
         }
-        else 
+        else
         {
-            return back()->withErrors('Student are not allow multiple time clock in & clock out for every day.');
+            return back()->withErrors('Please connect with SHINEE wifi!');
         }
-
-        return back()->withErrors('Something wrong!');
     }
 
     /**
