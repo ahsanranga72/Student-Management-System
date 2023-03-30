@@ -30,6 +30,7 @@ class ProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'phone' => 'required',
             'profile_image' =>  'image|mimes:jpeg,jpg,png,gif|max:10000',
         ]);
 

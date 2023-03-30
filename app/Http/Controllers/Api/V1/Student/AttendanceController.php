@@ -20,9 +20,9 @@ class AttendanceController extends Controller
 
     public function attendance_list(Request $request)
     {
-        $student_id = !empty($request->user()->employee) ? $request->user()->employee->id : 0;
+        $student = $this->student->where('user_id', $request->user()->id)->first();
 
-        $attendances = $this->attendance->where('employee_id', $student_id);
+        $attendances = $this->attendance->where('student_id', $student->id);
         if ($request->type == 'monthly' && !empty($request->month)) 
         {
             $month = date('m', strtotime($request->month));
@@ -136,7 +136,7 @@ class AttendanceController extends Controller
         $student = $this->student->where('user_id', $request->user()->id)->first();
         $total_present = $this->attendance
             ->orderBy('id', 'desc')
-            ->where('employee_id', '=', !empty($student) ? $student->id : 0)
+            ->where('student_id', '=', !empty($student) ? $student->id : 0)
             ->whereMonth('date', '=', date('m'))
             ->get()->count();
         return response()->json(['total_present'=>$total_present],201);
