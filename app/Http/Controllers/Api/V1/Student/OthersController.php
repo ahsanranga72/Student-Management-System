@@ -36,7 +36,12 @@ class OthersController extends Controller
 
     public function get_class_shecule()
     {
-        $student_class_schedule = DB::table('class_schedules');
+        $student_class_schedule = DB::table('class_schedules')
+            ->join('courses', 'courses.id', '=', 'class_schedules.course_id')
+            ->join('student_details', 'student_details.course_id', '=', 'courses.id')
+            ->where('student_details.user_id', '=', auth()->user()->id)
+            ->select('class_schedules.*')
+            ->get();
 
         return response()->json(['student_class_schedule' => $student_class_schedule]);
     }

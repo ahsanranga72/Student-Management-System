@@ -46,7 +46,7 @@
                                 @forelse($attendances as $k=>$attendance)
                                 <tr>
                                     <td>{{($attendances->currentPage()-1)*$attendances->perPage()+$k+1}}</td>
-                                    <td>{{$attendance->$student->name}}</td>
+                                    <td>{{$attendance->student->name}}</td>
                                     <td>{{$attendance->date}}</td>
                                     <td>{{$attendance->status}}</td>
                                     <td>{{$attendance->clock_in}}</td>
