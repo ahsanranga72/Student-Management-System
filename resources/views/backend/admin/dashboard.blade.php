@@ -63,7 +63,7 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3>{{$attendances->count()??0}}</h3>
 
                         <p>Today Present</p>
                     </div>
@@ -89,35 +89,44 @@
                 <!-- /.card -->
             </div>
             <div class="col-md-5">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Today's Attendance</h3>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Today's Attendance</h3>
 
-                <div class="card-tools">
-                  
+                  <div class="card-tools">
+                    
+                  </div>
                 </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th style="width: 10px">ID</th>
+                        <th>Name</th>
+                        <th style="width: 40px">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @forelse($attendances as $k=>$attendance)
+                      <tr>
+                        <td>{{($attendances->currentPage()-1)*$attendances->perPage()+$k+1}}</td>
+                        <td>{{$attendance->student->name??''}}</td>
+                        <td><span class="btn btn-sm btn-success">Present</span></td>
+                      </tr>
+                      @empty
+                      <tr>
+                        <td colspan="3" class="text-centre">No data found!</td>
+                      </tr>
+                      @endforelse
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
               </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th style="width: 10px">ID</th>
-                      <th>Name</th>
-                      <th style="width: 40px">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td><span class="badge bg-danger"></span></td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="card-tools" style="float: right;">
+                  {{ $attendances->links() }}
               </div>
-              <!-- /.card-body -->
-            </div>
             </div>
             <!-- /.col -->
         </div>

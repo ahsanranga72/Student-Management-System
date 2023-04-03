@@ -35,7 +35,8 @@ class DashboardController extends Controller
         $student_count = $this->student->get()->count();
         $course_count = $this->course->get()->count();
         $guest_count = $this->user->where('type', 'guest')->get()->count();
-        return view('backend.admin.dashboard', compact('holidays','student_count', 'course_count', 'guest_count'));
+        $attendances = $this->attendance->with('student')->where('date', '=', date("Y-m-d"))->paginate(10);
+        return view('backend.admin.dashboard', compact('holidays','student_count', 'course_count', 'guest_count', 'attendances'));
     }
 
     /**

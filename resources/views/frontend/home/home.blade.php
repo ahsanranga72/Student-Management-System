@@ -30,7 +30,7 @@
 <!-- font icon css style-->
 <link rel="stylesheet" href="{{ asset('public/assets/frontend') }}/css/font-awesome.min.css">
 </head>
-<body onLoad="load()" onUnload="GUnload()">
+<body>
 
 <!--wrapper start-->
 <div class="wrapper" id="wrapper"> 

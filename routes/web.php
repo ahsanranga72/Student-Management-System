@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BackEnd\Admin\AdminCourseController;
+use App\Http\Controllers\BackEnd\Admin\AdminCourseMaterialController;
 use App\Http\Controllers\BackEnd\Admin\ClassScheduleController;
 use App\Http\Controllers\BackEnd\Admin\GuestController;
 use App\Http\Controllers\BackEnd\Admin\HolidayController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\BackEnd\Admin\StudentController;
 use App\Http\Controllers\BackEnd\DashboardController;
 use App\Http\Controllers\BackEnd\Student\AttendanceController;
 use App\Http\Controllers\BackEnd\Student\StudentClassScheduleController;
+use App\Http\Controllers\BackEnd\Student\StudentCourseMaterialController;
 use App\Http\Controllers\FrontEnd\CourseController;
 use App\Http\Controllers\FrontEnd\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -62,6 +64,13 @@ Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.
                 Route::delete('delete/{id}', [AdminCourseController::class, 'destroy'])->name('delete');
                 Route::get('show/{id}', [AdminCourseController::class, 'show'])->name('show');
             });
+            Route::group(['as' => 'course-material.', 'prefix' => 'course-material'], function() {
+                Route::get('list', [AdminCourseMaterialController::class, 'list'])->name('list');
+                Route::get('create', [AdminCourseMaterialController::class, 'create'])->name('create');
+                Route::post('store', [AdminCourseMaterialController::class, 'store'])->name('store');
+                Route::delete('delete/{id}', [AdminCourseMaterialController::class, 'destroy'])->name('delete');
+                Route::get('show/{id}', [AdminCourseMaterialController::class, 'show'])->name('show');
+            });
             Route::group(['as' => 'class-schedule.', 'prefix' => 'class-schedule'], function() {
                 Route::get('list', [ClassScheduleController::class, 'list'])->name('list');
                 Route::get('create', [ClassScheduleController::class, 'create'])->name('create');
@@ -93,6 +102,10 @@ Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.
         });
         Route::group(['as' => 'class_schedule.', 'prefix' => 'class_schedule'], function() {
             Route::get('list', [StudentClassScheduleController::class, 'list'])->name('list');
+        });
+        Route::group(['as' => 'course-material.', 'prefix' => 'course-material'], function() {
+            Route::get('list', [StudentCourseMaterialController::class, 'list'])->name('list');
+            Route::get('show/{id}', [StudentCourseMaterialController::class, 'show'])->name('show');
         });
     });
 });

@@ -91,6 +91,6 @@ class AdminCourseController extends Controller
         $this->file_remover(asset('storage/app/public/course/thumbnail'), $course['thumbnail']);
         $course->delete();
 
-        return back()->with('success', 'Course successfully deleted.');
+        return back()->with('success', 'Course successfully removed.');
     }
 }

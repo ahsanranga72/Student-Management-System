@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\Student\AttendanceController;
 use App\Http\Controllers\Api\V1\Student\Auth\LoginController;
 use App\Http\Controllers\Api\V1\Student\Auth\RegistrationController;
 use App\Http\Controllers\Api\V1\Student\CourseController;
+use App\Http\Controllers\Api\V1\Student\CourseMaterialController;
 use App\Http\Controllers\Api\V1\Student\OthersController;
 use App\Http\Controllers\Api\V1\Student\ProfileController;
 use Illuminate\Http\Request;
@@ -41,12 +42,16 @@ Route::group(['namespace' => 'Api/V1/Student', 'prefix'=>'student'], function() 
         });
 
         Route::get('class-schedule', [OthersController::class, 'get_class_shecule']);
+
+        Route::group(['prefix' => 'course-material'], function() {
+            Route::get('get', [CourseMaterialController::class, 'get']);
+        });
     });
 
     Route::group(['prefix' => 'course'], function() {
         Route::get('get', [CourseController::class, 'get']);
     });
-
+    
     Route::group(['prefix' => 'holidays'], function() {
         Route::get('get', [OthersController::class, 'get_holidays']);
     });
