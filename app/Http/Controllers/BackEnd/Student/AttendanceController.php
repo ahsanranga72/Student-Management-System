@@ -66,7 +66,7 @@ class AttendanceController extends Controller
         }
         else
         {
-            return back()->withErrors('Please connect with SHINEE wifi!');
+            return back()->withErrors('Please connect with SHINEE Wi-Fi !');
         }
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\IpAddress;
 use App\Models\StudentDetails;
 use Illuminate\Http\Request;
 
@@ -11,11 +12,13 @@ class AttendanceController extends Controller
 {
     private $attendance;
     private $student;
+    private $ip;
 
-    public function __construct(Attendance $attendance, StudentDetails $student)
+    public function __construct(Attendance $attendance, StudentDetails $student, IpAddress $ip)
     {
         $this->attendance = $attendance;
         $this->student = $student;
+        $this->ip = $ip;
     }
 
     public function attendance_list(Request $request)
@@ -62,8 +65,9 @@ class AttendanceController extends Controller
 
     public function clock_in(Request $request)
     {
-        $ip = $_SERVER['REMOTE_ADDR'];
-        if($ip == '::1')
+        $connected_ip = $_SERVER['REMOTE_ADDR'];
+        $save_ips = $this->ip->pluck('ip')->toArray();
+        if(in_array($connected_ip, $save_ips))
         {
             $date = date("Y-m-d");
             $time = date("H:i:s");
@@ -102,7 +106,7 @@ class AttendanceController extends Controller
         }
         else
         {
-            return response()->json(['message' => 'Please connect with SHINEE wifi!'], 403);
+            return response()->json(['message' => 'Please connect with SHINEE Wi-Fi !'], 403);
         }
     }
 

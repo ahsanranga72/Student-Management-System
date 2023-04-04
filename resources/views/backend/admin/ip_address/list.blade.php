@@ -21,14 +21,7 @@
                                 <a href="{{ route('backend.admin.ip-address.create') }}"
                                     class="btn btn-primary" style="margin: 0 10px; padding: 2px 20px;"><i
                                         class="fas fa-plus"></i> Add</a>
-                                <input type="text" name="table_search" class="form-control float-right"
-                                    placeholder="Search">
-
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
+                                <label for="">Current IP: {{$_SERVER['REMOTE_ADDR']}}</label>
                             </div>
                         </div>
                     </div>
