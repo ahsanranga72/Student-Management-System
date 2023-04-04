@@ -50,8 +50,8 @@
                                         <td>{{ $guest['phone'] }}</td>
                                         <td>
                                             <div class="g-2">
-                                                <a class="btn btn-sm btn-danger" href="javascript:"
-                                                    onclick="alert_function('delete-{{ $guest['id'] }}')">Delete</a>
+                                                <a class="btn btn-sm btn-danger" href="javascript:" title="Delete"
+                                                    onclick="alert_function('delete-{{ $guest['id'] }}')"><i class="fas fa-trash"></i></a>
                                                 <form
                                                     action="{{ route('backend.admin.guest.delete',  $guest['id']) }}"
                                                     id="delete-{{ $guest['id'] }}"

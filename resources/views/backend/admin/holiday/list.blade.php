@@ -51,8 +51,11 @@
                                         <td>{{ $holiday['date'] }}</td>
                                         <td>
                                             <div class="g-2">
+                                                <a type="button"
+                                                    href="{{ route('backend.admin.holiday.edit', $holiday['id']) }}"
+                                                    class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                                 <a class="btn btn-sm btn-danger" href="javascript:"
-                                                    onclick="alert_function('delete-{{ $holiday['id'] }}')">Delete</a>
+                                                    onclick="alert_function('delete-{{ $holiday['id'] }}')"><i class="fas fa-trash"></i></a>
                                                 <form
                                                     action="{{ route('backend.admin.holiday.delete',  $holiday['id']) }}"
                                                     id="delete-{{ $holiday['id'] }}"

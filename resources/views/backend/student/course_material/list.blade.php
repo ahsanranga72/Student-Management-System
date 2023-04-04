@@ -48,7 +48,10 @@
                                             <div class="g-2">
                                                 <a type="button" target="_blank"
                                                     href="{{ route('backend.student.course-material.show', $course_material->id) }}"
-                                                    class="btn btn-sm btn-primary">View</a>
+                                                    class="btn btn-sm btn-secondary" title="View"><i class="fas fa-eye"></i></a>
+                                                <a type="button"
+                                                    href="{{ route('backend.student.course-material.download', $course_material->id) }}"
+                                                    class="btn btn-sm btn-success" title="Download"><i class="fas fa-download"></i></a>
                                             </div>
                                         </td>
                                     </tr>

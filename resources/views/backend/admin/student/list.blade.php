@@ -49,14 +49,17 @@
                                     <td>{{($students->currentPage()-1)*$students->perPage()+$k+1}}</td>
                                     <td>{{$student->student_id}}</td>
                                     <td>{{$student->name}}</td>
-                                    <td>{{$student->course->name}}</td>
+                                    <td>{{$student->course->name??''}}</td>
                                     <td>
                                         <div class="g-2">
-                                            <a type="button"
+                                            <a type="button" title="View"
                                                 href="{{ route('backend.admin.students.show', $student['id']) }}"
-                                                class="btn btn-sm btn-primary">View</a>
-                                            <a class="btn btn-sm btn-danger" href="javascript:"
-                                                onclick="alert_function('delete-{{ $student['id'] }}')">Delete</a>
+                                                class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
+                                            <a type="button"
+                                                href="{{ route('backend.admin.students.edit', $student['id']) }}"
+                                                class="btn btn-sm btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+                                            <a class="btn btn-sm btn-danger" href="javascript:" title="Delete"
+                                                onclick="alert_function('delete-{{ $student['id'] }}')"><i class="fas fa-trash"></i></a>
                                             <form
                                                 action="{{ route('backend.admin.students.delete',  $student['id']) }}"
                                                 id="delete-{{ $student['id'] }}"

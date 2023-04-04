@@ -169,6 +169,117 @@ class StudentController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function edit(string $id)
+    {
+        $student = $this->student_details->find($id);
+        $student_educations = $this->student_education_details->where('student_id', $id)->get();
+        return view('backend.admin.student.edit', compact('student', 'student_educations'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        Validator::make($request->all(), [
+            'student_name' => 'required',
+            'father_name' => 'required',
+            'mother_name' => 'required',
+            'permanent_address' => 'required',
+            'p_state' => 'required',
+            'p_pin_code' => 'required',
+            'mobile' => 'required',
+            'date_of_birth' => 'required',
+            'nationality' => 'required',
+            'sex' => 'required',
+            'national_id_card_no' => 'required',
+        ])->validate();
+
+        $student_details = $this->student_details->find($id);
+
+        $user = $this->user->find($student_details->user_id);
+        $user['name'] = $request['student_name'];
+        $user['phone'] = $request['mobile'];
+        $user->save();
+
+        $student_details['name'] = $request['student_name'];
+        if($request->has('student_image')) $student_details['image'] = $this->image_uploader('student/', 'png', $request->student_image, $student_details['image']);
+        $student_details['father_name'] = $request['father_name'];
+        $student_details['mother_name'] = $request['mother_name'];
+        $student_details['father_occupation'] = $request['father_occupation'];
+        $student_details['permanent_address'] = $request['permanent_address'];
+        $student_details['p_state'] = $request['p_state'];
+        $student_details['p_pin_code'] = $request['p_pin_code'];
+        $student_details['telephone'] = $request['telephone'];
+        $student_details['fax'] = $request['fax'];
+        $student_details['mobile'] = $request['mobile'];
+        $student_details['correspondence_address'] = $request['correspondence_address'];
+        $student_details['c_state'] = $request['c_state'];
+        $student_details['c_pin_code'] = $request['c_pin_code'];
+        $student_details['date_of_birth'] = $request['date_of_birth'];
+        $student_details['nationality'] = $request['nationality'];
+        $student_details['sex'] = $request['sex'];
+        $student_details['physical_challenges'] = $request['physical_challenges'];
+        $student_details['national_id_card_no'] = $request['national_id_card_no'];
+        $student_details['lg_name'] = $request['lg_name'];
+        $student_details['lg_address'] = $request['lg_address'];
+        $student_details['lg_mobile'] = $request['lg_mobile'];
+        $student_details['lg_email'] = $request['lg_email'];
+        $student_details->save();
+
+        $this->student_education_details->where('student_id', $student_details->id)->delete();
+
+        $student_education_details = new StudenteducationDetails;
+        $student_education_details['student_id'] = $student_details->id;
+        $student_education_details['exam'] = '10th / Equivalent';
+        $student_education_details['board'] = $request['10th_board'];
+        $student_education_details['passing_year'] = $request['10th_passing_year'];
+        $student_education_details['mark'] = $request['10th_mark'];
+        $student_education_details['division'] = $request['10th_division'];
+        $student_education_details->save();
+
+        $student_education_details = new StudenteducationDetails;
+        $student_education_details['student_id'] = $student_details->id;
+        $student_education_details['exam'] = '12th / Equivalent';
+        $student_education_details['board'] = $request['12th_board'];
+        $student_education_details['passing_year'] = $request['12th_passing_year'];
+        $student_education_details['mark'] = $request['12th_mark'];
+        $student_education_details['division'] = $request['12th_division'];
+        $student_education_details->save();
+
+        $student_education_details = new StudenteducationDetails;
+        $student_education_details['student_id'] = $student_details->id;
+        $student_education_details['exam'] = 'Graduation';
+        $student_education_details['board'] = $request['graduation_board'];
+        $student_education_details['passing_year'] = $request['graduation_passing_year'];
+        $student_education_details['mark'] = $request['graduation_mark'];
+        $student_education_details['division'] = $request['graduation_division'];
+        $student_education_details->save();
+
+        $student_education_details = new StudenteducationDetails;
+        $student_education_details['student_id'] = $student_details->id;
+        $student_education_details['exam'] = 'Post graduation';
+        $student_education_details['board'] = $request['post_graduation_board'];
+        $student_education_details['passing_year'] = $request['post_graduation_passing_year'];
+        $student_education_details['mark'] = $request['post_graduation_mark'];
+        $student_education_details['division'] = $request['post_graduation_division'];
+        $student_education_details->save();
+
+        $student_education_details = new StudenteducationDetails;
+        $student_education_details['student_id'] = $student_details->id;
+        $student_education_details['exam'] = 'Others';
+        $student_education_details['board'] = $request['others_board'];
+        $student_education_details['passing_year'] = $request['others_passing_year'];
+        $student_education_details['mark'] = $request['others_mark'];
+        $student_education_details['division'] = $request['others_division'];
+        $student_education_details->save();
+
+        return redirect()->route('backend.admin.students.show', $student_details->id)->with('success', 'Student details updated.');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function attendance(Request $request)
@@ -206,7 +317,7 @@ class StudentController extends Controller
                 ]
             );
         }
-        $attendances = $attendances->paginate(10);
+        $attendances = $attendances->orderBy('student_id', 'asc')->paginate(10);
 
         return view('backend.admin.student.attendance', compact('attendances'));
     }
@@ -214,9 +325,44 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function mark_attendance()
     {
-        //
+        $students = $this->student_details->pluck('name', 'id');
+        return view('backend.admin.student.mark-attendance', compact('students'));
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function store_mark_attendance(Request $request)
+    {
+        Validator::make($request->all(), [
+            'student' => 'required',
+            'date' => 'required',
+        ])->validate();
+
+        $student = $this->student_details->where('id', $request->student)->first();
+        if(empty($student))
+        {
+            return back()->withErrors('Student not found!');
+        }
+
+        $chkExist = $this->attendance->where('student_id', '=', $request->student)->where('date', $request->date)->first();
+
+        if (empty($chkExist)) {
+            $attendance = $this->attendance;
+            $attendance->student_id = $request->student;
+            $attendance->date = $request->date;
+            $attendance->status = 'Present';
+            $attendance->clock_in = '10:00:00';
+            $attendance->clock_out = '12:00:00';
+            $attendance->save();
+
+            return back()->with('success','Student marked as present.');
+        }
+        else 
+        {
+            return back()->withErrors('Attendance already exist!');
+        }
     }
 
     /**
@@ -224,9 +370,10 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        $student = $this->student_details->with('course')->find($id);
+        $student = $this->student_details->find($id);
         $this->user->find($student->user_id)->delete();
         $this->student_education_details->where('student_id', $id)->delete();
+        $this->file_remover('student/', $student['image']);
         $student->delete();
 
         return redirect()->route('backend.admin.students.list')->with('success', 'Successfully removed.');

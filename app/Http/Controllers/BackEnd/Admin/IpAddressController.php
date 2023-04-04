@@ -3,25 +3,25 @@
 namespace App\Http\Controllers\BackEnd\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Holiday;
+use App\Models\IpAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class HolidayController extends Controller
+class IpAddressController extends Controller
 {
-    private $holiday;
+    private $ip;
 
-    public function __construct(Holiday $holiday)
+    public function __construct(IpAddress $ip)
     {
-        $this->holiday = $holiday;
+        $this->ip = $ip;
     }
     /**
      * Display a listing of the resource.
      */
     public function list()
     {
-        $holidays = $this->holiday->paginate(10);
-        return view('backend.admin.holiday.list', compact('holidays'));
+        $ips = $this->ip->paginate(10);
+        return view('backend.admin.ip_address.list', compact('ips'));
     }
 
     /**
@@ -29,7 +29,7 @@ class HolidayController extends Controller
      */
     public function create()
     {
-        return view('backend.admin.holiday.create');
+        return view('backend.admin.ip_address.create');
     }
 
     /**
@@ -38,16 +38,16 @@ class HolidayController extends Controller
     public function store(Request $request)
     {
         Validator::make($request->all(), [
-            'title' => 'required',
-            'date' => 'required',
+            'name' => 'required',
+            'ip_address' => 'required',
         ])->validate();
 
-        $holiday = $this->holiday;
-        $holiday['title'] = $request['title'];
-        $holiday['date'] = $request['date'];
-        $holiday->save();
+        $ip = $this->ip;
+        $ip['name'] = $request['name'];
+        $ip['ip'] = $request['ip_address'];
+        $ip->save();
 
-        return redirect()->route('backend.admin.holiday.create')->with('success', 'Holiday successfully created.');
+        return redirect()->route('backend.admin.ip-address.create')->with('success', 'IP Address successfully created.');
     }
 
     /**
@@ -63,8 +63,8 @@ class HolidayController extends Controller
      */
     public function edit(string $id)
     {
-        $holiday = $this->holiday->find($id);
-        return view('backend.admin.holiday.edit', compact('holiday'));
+        $ip = $this->ip->find($id);
+        return view('backend.admin.ip_address.edit', compact('ip'));
     }
 
     /**
@@ -73,16 +73,16 @@ class HolidayController extends Controller
     public function update(Request $request, string $id)
     {
         Validator::make($request->all(), [
-            'title' => 'required',
-            'date' => 'required',
+            'name' => 'required',
+            'ip_address' => 'required',
         ])->validate();
 
-        $holiday = $this->holiday->find($id);
-        $holiday['title'] = $request['title'];
-        $holiday['date'] = $request['date'];
-        $holiday->save();
+        $ip = $this->ip->find($id);
+        $ip['name'] = $request['name'];
+        $ip['ip'] = $request['ip_address'];
+        $ip->save();
 
-        return redirect()->route('backend.admin.holiday.list')->with('success', 'Holiday successfully updated.');
+        return redirect()->route('backend.admin.ip-address.list')->with('success', 'IP Address successfully updated.');
     }
 
     /**
@@ -90,7 +90,7 @@ class HolidayController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->holiday->find($id)->delete();
+        $this->ip->find($id)->delete();
         return back()->with('success', 'Successfully removed.');
     }
 }

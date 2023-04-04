@@ -29,7 +29,7 @@
                             <div class="col-4">
                                 <b>Name:</b> {{$student->name}}<br>
                                 <b>ID:</b> {{$student->student_id}}<br>
-                                <b>Course name:</b> {{$student->course->name}}<br>
+                                <b>Course name:</b> {{$student->course->name??''}}<br>
                                 <b>Mobile:</b> {{$student->mobile}}<br>
                                 <b>Email:</b> {{$student->email}}<br>
                                 <b>Date of birth:</b> {{$student->date_of_birth}}<br>
@@ -82,7 +82,7 @@
                                                 <td>{{$ten->division ?? ''}}</td>
                                             </tr>
                                             <tr>
-                                                @php($twelve = $student_educations->where('exam', '10th / Equivalent')->first())
+                                                @php($twelve = $student_educations->where('exam', '12th / Equivalent')->first())
                                                 <td>12th / Equivalent</td>
                                                 <td>{{$twelve->board ?? ''}}</td>
                                                 <td>{{$twelve->passing_year ?? ''}}</td>
@@ -90,7 +90,7 @@
                                                 <td>{{$twelve->division ?? ''}}</td>
                                             </tr>
                                             <tr>
-                                                @php($graduation = $student_educations->where('exam', '10th / Equivalent')->first())
+                                                @php($graduation = $student_educations->where('exam', 'Graduation')->first())
                                                 <td>Graduation</td>
                                                 <td>{{$graduation->board ?? ''}}</td>
                                                 <td>{{$graduation->passing_year ?? ''}}</td>
@@ -98,7 +98,7 @@
                                                 <td>{{$graduation->division ?? ''}}</td>
                                             </tr>
                                             <tr>
-                                                @php($post_graduation = $student_educations->where('exam', '10th / Equivalent')->first())
+                                                @php($post_graduation = $student_educations->where('exam', 'Post graduation')->first())
                                                 <td>Post graduation</td>
                                                 <td>{{$post_graduation->board ?? ''}}</td>
                                                 <td>{{$post_graduation->passing_year ?? ''}}</td>
@@ -106,7 +106,7 @@
                                                 <td>{{$post_graduation->division ?? ''}}</td>
                                             </tr>
                                             <tr>
-                                                @php($others = $student_educations->where('exam', '10th / Equivalent')->first())
+                                                @php($others = $student_educations->where('exam', 'Others')->first())
                                                 <td>Any Other(s)</td>
                                                 <td>{{$others->board ?? ''}}</td>
                                                 <td>{{$others->passing_year ?? ''}}</td>

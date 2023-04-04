@@ -57,9 +57,10 @@ class StudentCourseMaterialController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function download(string $id)
     {
-        //
+        $course_material =$this->course_material->find($id);
+        return response()->download(storage_path('app/public/course_material/'.$course_material['file']));
     }
 
     /**

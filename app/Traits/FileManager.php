@@ -42,9 +42,9 @@ trait FileManager
 
     function file_remover(string $dir, $file): bool
     {
-        if (!isset($image)) return true;
+        if (!isset($file)) return true;
 
-        if (Storage::disk('public')->exists($dir . $image)) Storage::disk('public')->delete($dir . $file);
+        if (Storage::disk('public')->exists($dir . $file)) Storage::disk('public')->delete($dir . $file);
 
         return true;
     }

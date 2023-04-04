@@ -6,6 +6,7 @@ use App\Http\Controllers\BackEnd\Admin\AdminCourseMaterialController;
 use App\Http\Controllers\BackEnd\Admin\ClassScheduleController;
 use App\Http\Controllers\BackEnd\Admin\GuestController;
 use App\Http\Controllers\BackEnd\Admin\HolidayController;
+use App\Http\Controllers\BackEnd\Admin\IpAddressController;
 use App\Http\Controllers\BackEnd\Admin\QuestionController;
 use App\Http\Controllers\BackEnd\Admin\StudentController;
 use App\Http\Controllers\BackEnd\DashboardController;
@@ -54,35 +55,54 @@ Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.
                 Route::get('create', [StudentController::class, 'create'])->name('create');
                 Route::post('store', [StudentController::class, 'store'])->name('store');
                 Route::get('show/{id}', [StudentController::class, 'show'])->name('show');
+                Route::get('edit/{id}', [StudentController::class, 'edit'])->name('edit');
+                Route::post('update/{id}', [StudentController::class, 'update'])->name('update');
                 Route::delete('delete/{id}', [StudentController::class, 'destroy'])->name('delete');
                 Route::get('attendance', [StudentController::class, 'attendance'])->name('attendance');
+                Route::get('mark-attendance', [StudentController::class, 'mark_attendance'])->name('mark-attendance');
+                Route::post('mark-attendance', [StudentController::class, 'store_mark_attendance'])->name('mark-attendance');
             });
             Route::group(['as' => 'course.', 'prefix' => 'course'], function() {
                 Route::get('list', [AdminCourseController::class, 'list'])->name('list');
                 Route::get('create', [AdminCourseController::class, 'create'])->name('create');
                 Route::post('store', [AdminCourseController::class, 'store'])->name('store');
-                Route::delete('delete/{id}', [AdminCourseController::class, 'destroy'])->name('delete');
                 Route::get('show/{id}', [AdminCourseController::class, 'show'])->name('show');
+                Route::get('edit/{id}', [AdminCourseController::class, 'edit'])->name('edit');
+                Route::post('update/{id}', [AdminCourseController::class, 'update'])->name('update');
+                Route::delete('delete/{id}', [AdminCourseController::class, 'destroy'])->name('delete');
             });
             Route::group(['as' => 'course-material.', 'prefix' => 'course-material'], function() {
                 Route::get('list', [AdminCourseMaterialController::class, 'list'])->name('list');
                 Route::get('create', [AdminCourseMaterialController::class, 'create'])->name('create');
                 Route::post('store', [AdminCourseMaterialController::class, 'store'])->name('store');
-                Route::delete('delete/{id}', [AdminCourseMaterialController::class, 'destroy'])->name('delete');
                 Route::get('show/{id}', [AdminCourseMaterialController::class, 'show'])->name('show');
+                Route::get('edit/{id}', [AdminCourseMaterialController::class, 'edit'])->name('edit');
+                Route::post('update/{id}', [AdminCourseMaterialController::class, 'update'])->name('update');
+                Route::delete('delete/{id}', [AdminCourseMaterialController::class, 'destroy'])->name('delete');
             });
             Route::group(['as' => 'class-schedule.', 'prefix' => 'class-schedule'], function() {
                 Route::get('list', [ClassScheduleController::class, 'list'])->name('list');
                 Route::get('create', [ClassScheduleController::class, 'create'])->name('create');
                 Route::post('store', [ClassScheduleController::class, 'store'])->name('store');
+                Route::get('edit/{id}', [ClassScheduleController::class, 'edit'])->name('edit');
+                Route::post('update/{id}', [ClassScheduleController::class, 'update'])->name('update');
                 Route::delete('delete/{id}', [ClassScheduleController::class, 'destroy'])->name('delete');
-                Route::get('show/{id}', [ClassScheduleController::class, 'show'])->name('show');
             });
             Route::group(['as' => 'holiday.', 'prefix' => 'holiday'], function() {
                 Route::get('list', [HolidayController::class, 'list'])->name('list');
                 Route::get('create', [HolidayController::class, 'create'])->name('create');
                 Route::post('store', [HolidayController::class, 'store'])->name('store');
+                Route::get('edit/{id}', [HolidayController::class, 'edit'])->name('edit');
+                Route::post('update/{id}', [HolidayController::class, 'update'])->name('update');
                 Route::delete('delete/{id}', [HolidayController::class, 'destroy'])->name('delete');
+            });
+            Route::group(['as' => 'ip-address.', 'prefix' => 'ip-address'], function() {
+                Route::get('list', [IpAddressController::class, 'list'])->name('list');
+                Route::get('create', [IpAddressController::class, 'create'])->name('create');
+                Route::post('store', [IpAddressController::class, 'store'])->name('store');
+                Route::get('edit/{id}', [IpAddressController::class, 'edit'])->name('edit');
+                Route::post('update/{id}', [IpAddressController::class, 'update'])->name('update');
+                Route::delete('delete/{id}', [IpAddressController::class, 'destroy'])->name('delete');
             });
             Route::group(['as' => 'question.', 'prefix' => 'question'], function() {
                 Route::get('list', [QuestionController::class, 'list'])->name('list');
@@ -106,6 +126,7 @@ Route::group(['namespace' => 'BackEnd', 'prefix' => 'backend', 'as' => 'backend.
         Route::group(['as' => 'course-material.', 'prefix' => 'course-material'], function() {
             Route::get('list', [StudentCourseMaterialController::class, 'list'])->name('list');
             Route::get('show/{id}', [StudentCourseMaterialController::class, 'show'])->name('show');
+            Route::get('download/{id}', [StudentCourseMaterialController::class, 'download'])->name('download');
         });
     });
 });

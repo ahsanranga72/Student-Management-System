@@ -55,8 +55,11 @@
                                         <td>{{ $class_schedule['end_time'] }}</td>
                                         <td>
                                             <div class="g-2">
+                                                <a type="button"
+                                                    href="{{ route('backend.admin.class-schedule.edit', $class_schedule['id']) }}"
+                                                    class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                                 <a class="btn btn-sm btn-danger" href="javascript:"
-                                                    onclick="alert_function('delete-{{ $class_schedule['id'] }}')">Delete</a>
+                                                    onclick="alert_function('delete-{{ $class_schedule['id'] }}')"><i class="fas fa-trash"></i></a>
                                                 <form
                                                     action="{{ route('backend.admin.class-schedule.delete',  $class_schedule['id']) }}"
                                                     id="delete-{{ $class_schedule['id'] }}"

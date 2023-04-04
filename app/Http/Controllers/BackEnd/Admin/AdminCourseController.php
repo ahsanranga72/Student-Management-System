@@ -42,8 +42,8 @@ class AdminCourseController extends Controller
         Validator::make($request->all(), [
             'code' => 'required',
             'name' => 'required',
-            'file' => "required|mimes:pdf|max:10000",
-            'thumbnail' =>  'required|image|mimes:jpeg,jpg,png,gif|max:10000',
+            'file' => "required|mimes:pdf|max:2000",
+            'thumbnail' =>  'required|image|mimes:jpeg,jpg,png,gif|max:2000',
         ])->validate();
 
         $course = $this->course;
@@ -70,7 +70,8 @@ class AdminCourseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $course = $this->course->find($id);
+        return view('backend.admin.course.edit', compact('course'));
     }
 
     /**
@@ -78,7 +79,21 @@ class AdminCourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Validator::make($request->all(), [
+            'code' => 'required',
+            'name' => 'required',
+            'file' => "mimes:pdf|max:2000",
+            'thumbnail' => 'image|mimes:jpeg,jpg,png,gif|max:2000',
+        ])->validate();
+
+        $course = $this->course->find($id);
+        $course['code'] = $request['code'];
+        $course['name'] = $request['name'];
+        if($request->has('file')) $course['file'] = $this->image_uploader('course/file/', 'pdf', $request->file, $course['file']);
+        if($request->has('thumbnail')) $course['thumbnail'] = $this->image_uploader('course/thumbnail/', 'png', $request->thumbnail, $course['thumbnail']);
+        $course->save();
+
+        return redirect()->route('backend.admin.course.list')->with('success', 'Course successfully updated.');
     }
 
     /**
@@ -87,8 +102,8 @@ class AdminCourseController extends Controller
     public function destroy($id)
     {
         $course = $this->course->find($id);
-        $this->file_remover(asset('storage/app/public/course/file'), $course['file']);
-        $this->file_remover(asset('storage/app/public/course/thumbnail'), $course['thumbnail']);
+        $this->file_remover('course/file/', $course['file']);
+        $this->file_remover('course/thumbnail/', $course['thumbnail']);
         $course->delete();
 
         return back()->with('success', 'Course successfully removed.');

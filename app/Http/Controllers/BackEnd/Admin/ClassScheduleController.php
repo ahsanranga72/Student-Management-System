@@ -71,7 +71,9 @@ class ClassScheduleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $courses = $this->course->get();
+        $class_schedule = $this->class_schedule->find($id);
+        return view('backend.admin.class_schedule.edit', compact('courses','class_schedule'));
     }
 
     /**
@@ -79,7 +81,21 @@ class ClassScheduleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Validator::make($request->all(), [
+            'course' => 'required',
+            'day' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+        ])->validate();
+
+        $class_schedule = $this->class_schedule->find($id);
+        $class_schedule['course_id'] = $request['course'];
+        $class_schedule['day'] = $request['day'];
+        $class_schedule['start_time'] = $request['start_time'];
+        $class_schedule['end_time'] = $request['end_time'];
+        $class_schedule->save();
+
+        return redirect()->route('backend.admin.class-schedule.list')->with('success', 'Successfully updated.');
     }
 
     /**

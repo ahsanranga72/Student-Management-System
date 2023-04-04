@@ -46,7 +46,7 @@ class AdminCourseMaterialController extends Controller
         Validator::make($request->all(), [
             'course' => 'required',
             'name' => 'required',
-            'file' => "required|mimes:pdf|max:10000",
+            'file' => "required|mimes:pdf|max:2000",
         ])->validate();
 
         $course_material = $this->course_material;
@@ -72,7 +72,9 @@ class AdminCourseMaterialController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $courses = $this->course->get();
+        $course_material = $this->course_material->find($id);
+        return view('backend.admin.course_material.edit', compact('courses', 'course_material'));
     }
 
     /**
@@ -80,7 +82,19 @@ class AdminCourseMaterialController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        Validator::make($request->all(), [
+            'course' => 'required',
+            'name' => 'required',
+            'file' => "mimes:pdf|max:2000",
+        ])->validate();
+
+        $course_material = $this->course_material->find($id);
+        $course_material['course_id'] = $request['course'];
+        $course_material['name'] = $request['name'];
+        if($request->has('file')) $course_material['file'] = $this->image_uploader('course_material/', 'pdf', $request->file, $course_material['file']);
+        $course_material->save();
+
+        return redirect()->route('backend.admin.course-material.list')->with('success', 'Course material successfully updated.');
     }
 
     /**
@@ -89,7 +103,7 @@ class AdminCourseMaterialController extends Controller
     public function destroy($id)
     {
         $course_material = $this->course_material->find($id);
-        $this->file_remover(asset('storage/app/public/course_material/'), $course_material['file']);
+        $this->file_remover('course_material/', $course_material['file']);
         $course_material->delete();
 
         return back()->with('success', 'Course material successfully removed.');

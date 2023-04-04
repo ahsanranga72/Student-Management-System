@@ -53,9 +53,12 @@
                                             <div class="g-2">
                                                 <a type="button" target="_blank"
                                                     href="{{ route('backend.admin.course-material.show', $course_material['id']) }}"
-                                                    class="btn btn-sm btn-primary">View</a>
-                                                <a class="btn btn-sm btn-danger" href="javascript:"
-                                                    onclick="alert_function('delete-{{ $course_material['id'] }}')">Delete</a>
+                                                    class="btn btn-sm btn-secondary" title="View"><i class="fas fa-eye"></i></a>
+                                                <a type="button"
+                                                    href="{{ route('backend.admin.course-material.edit', $course_material['id']) }}"
+                                                    class="btn btn-sm btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+                                                <a class="btn btn-sm btn-danger" href="javascript:" title="Delete"
+                                                    onclick="alert_function('delete-{{ $course_material['id'] }}')"><i class="fas fa-trash"></i></a>
                                                 <form
                                                     action="{{ route('backend.admin.course-material.delete',  $course_material['id']) }}"
                                                     id="delete-{{ $course_material['id'] }}"

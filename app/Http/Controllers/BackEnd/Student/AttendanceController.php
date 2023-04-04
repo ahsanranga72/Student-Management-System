@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackEnd\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\IpAddress;
 use App\Models\StudentDetails;
 use Illuminate\Http\Request;
 
@@ -11,19 +12,22 @@ class AttendanceController extends Controller
 {
     private $student;
     private $attendance;
+    private $ip;
 
-    public function __construct(StudentDetails $student, Attendance $attendance)
+    public function __construct(StudentDetails $student, Attendance $attendance, IpAddress $ip)
     {
         $this->student = $student;
         $this->attendance = $attendance;
+        $this->ip = $ip;
     }
     /**
      * Display a listing of the resource.
      */
     public function clock_in(Request $request)
     {
-        $ip = $_SERVER['REMOTE_ADDR'];
-        if($ip == '::1')
+        $connected_ip = $_SERVER['REMOTE_ADDR'];
+        $save_ips = $this->ip->pluck('ip')->toArray();
+        if(in_array($connected_ip, $save_ips))
         {
             $date = date("Y-m-d");
             $time = date("H:i:s");
